@@ -1,0 +1,19 @@
+{
+    "name": "wcs/quete_mvc_2",
+    "description": "projet quete mvc 2 passage en objet",
+    "authors": [
+        {
+            "name": "Florence LG",
+            "email": "flo.lg.gautier@gmail.com"
+        }
+    ],
+    "require": {},
+
+    "autoload": 
+    	{
+    	    "psr-4": {
+            "": "src/"
+    	}
+    }
+}
+
