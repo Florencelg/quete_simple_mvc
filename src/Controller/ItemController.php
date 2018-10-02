@@ -5,15 +5,20 @@
  * Date: 01/10/18
  * Time: 17:11
  */
-require __DIR__ . '/../Model/ItemManager.php';
 
-require __DIR__ . '/../View/item.php';
+namespace Controller;
+use Model\ItemManager;
+
+
 
 class ItemController
 {
 
-   public function index(){
-       $items = selectAllItems();
+   public function index()
+   {
+       $itemManager = new ItemManager();
+       $items = $itemManager->selectAllItems();
+       require __DIR__ . '/../View/item.php';
    }
 
 }

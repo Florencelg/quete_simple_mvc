@@ -5,6 +5,7 @@
  * Date: 01/10/18
  * Time: 17:12
  */
+namespace Model;
 require __DIR__ . '/../../app/db.php';
 
 class ItemManager
