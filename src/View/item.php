@@ -16,6 +16,7 @@
                 <li><?= $item['title'] ?></li>
             <?php endforeach ?>
             </ul>
+        <a href='showItem.php?route=items'></a>
         </section>
 </body>
 </html>
