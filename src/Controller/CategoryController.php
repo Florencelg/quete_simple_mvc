@@ -25,7 +25,7 @@ namespace Controller {
         {
             $categoryManager = new CategoryManager();
             $categorys = $categoryManager->selectAllCategory();
-            return $this-> twig->render('category.html.twig',['category'=>$categorys]);
+            return $this-> twig->render('category.html.twig',['categorys'=>$categorys]);
         }
         public function show(int $id)
         {
