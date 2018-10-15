@@ -1,6 +1,11 @@
 <?php
+
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../app/dispatcher.php';
+
+
+
+
 /**
 $route = $_GET['route'] ?? '';
 
@@ -15,5 +20,5 @@ if ($route === 'items') {
     header("HTTP/1.0 404 Not Found");
     echo 'Page introuvable';
 }
-*/
-?>
+
+?>*/

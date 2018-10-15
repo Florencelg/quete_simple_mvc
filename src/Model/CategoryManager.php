@@ -14,7 +14,7 @@ class CategoryManager
     public function selectAllCategory():array
     {
         $pdo = new \PDO(DSN, USER, PASS);
-        $query = "SELECT * FROM category";
+        $query = "SELECT * FROM simplemvc.category";
         $res = $pdo->query($query);
 
         return $res->fetchAll();
@@ -22,7 +22,7 @@ class CategoryManager
     public function selectOneCategory(int $id):array{
 
         $pdo = new \PDO(DSN, USER, PASS);
-        $query = "SELECT * FROM category WHERE id = :id";
+        $query = "SELECT * FROM simplemvc.category WHERE id = :id";
         $statement = $pdo->prepare($query);
         $statement->bindValue(':id', $id, \PDO::PARAM_INT);
         $statement->execute();

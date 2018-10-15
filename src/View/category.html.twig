@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig'%}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <h1>Categorys</h1>
+    <ul>
+        {% for category in categorys %}
+            <li>{% category.title %}</li>
+        {% endfor %}
+    </ul>
+    <a href='showCategory.html.twig?route=categorys'></a>
+{% endblock %}
