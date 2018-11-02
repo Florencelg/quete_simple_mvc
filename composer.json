@@ -9,13 +9,14 @@
     ],
     "require": {
         "nikic/fast-route": "^1.3",
-        "twig/twig": "^2.5"
+        "twig/twig": "^2.5",
+        "ext-pdo": "*"
     },
 
-    "autoload": 
-    	{
+    "autoload": {
     	    "psr-4": {
-            "": "src/"
+                "": "src/",
+                "App\\":"app/"
     	}
     }
 }

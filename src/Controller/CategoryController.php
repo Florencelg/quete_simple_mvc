@@ -8,31 +8,38 @@
 namespace Controller {
 
     use Model\CategoryManager;
-    use Twig_Loader_Filesystem;
-    use Twig_Environment;
 
-    class CategoryController
+    class CategoryController extends AbstractController
     {
         private $twig;
 
-        public function __construct()
-        {
-            $loader = new Twig_Loader_Filesystem(__DIR__.'/../View');
-            $this->twig = new Twig_Environment($loader);
-        }
-
         public function index()
         {
-            $categoryManager = new CategoryManager();
-            $categorys = $categoryManager->selectAllCategory();
+            $categoryManager = new CategoryManager($this->pdo);
+            $categorys = $categoryManager->selectAll();
             return $this-> twig->render('category.html.twig',['categorys'=>$categorys]);
         }
         public function show(int $id)
         {
-            $categoryManager = new CategoryManager();
-            $category = $categoryManager->selectOneCategory($id);
+            $categoryManager = new CategoryManager($this->pdo);
+            $category = $categoryManager->selectOneById($id);
 
             return $this-> twig->render('showCategory.html.twig',['category'=>$category]);
+        }
+        public function add()
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $categoryManager = new CategoryManager($this->getPdo());
+                // l'objet $item hydraté est simplement envoyé en paramètre de insert()
+                $category = new Category();
+                $category->setTitle(trim($_POST['title']));
+                $categoryManager->insert($category);
+                // si tout se passe bien, redirection
+                header('Location: /');
+                exit();
+            }
+            // le formulaire HTML est affiché (vue à créer)
+            return $this->pdo->render('category/add.html.twig');
         }
     }
 }

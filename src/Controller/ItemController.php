@@ -6,33 +6,47 @@
  * Time: 17:11
  */
 
-namespace Controller;
+namespace Controller {
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Model\ItemManager;
+    use Model\Item;
+    use Model\ItemManager;
 
-class ItemController
-{
-    private $twig;
-
-    public function __construct()
+    class ItemController extends AbstractController
     {
-        $loader = new Twig_Loader_Filesystem(__DIR__.'/../View');
-        $this->twig = new Twig_Environment($loader);
-    }
-    public function index()
-   {
-       $itemManager = new ItemManager();
-       $items = $itemManager->selectAllItems();
-       return $this-> twig->render('item.html.twig',['items'=>$items]);
-       /**return $view->render(__DIR__.'/../View/View.php',['items'=>$items]);*/
-   }
-    public function show(int $id)
-    {
-        $itemManager = new ItemManager();
-        $item = $itemManager->selectOneItem($id);
-        return $this-> twig->render('showItem.html.twig',['items'=>$item]);
-        /**require __DIR__ . '/../View/showItem.html.twig';*/
+        protected $twig;
+
+        public function index()
+        {
+            $itemManager = new ItemManager($this->pdo);
+            $items = $itemManager->selectAll();
+            return $this->pdo->render('item.html.twig', ['items' => $items]);
+            /**return $view->render(__DIR__.'/../View/View.php',['items'=>$items]);*/
+        }
+
+        public function show(int $id)
+        {
+            $itemManager = new ItemManager($this->pdo);
+            $item = $itemManager->selectOneById($id);
+            return $this->pdo->render('showItem.html.twig', ['items' => $item]);
+            /**require __DIR__ . '/../View/showItem.html.twig';*/
+        }
+
+        public function add()
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $itemManager = new ItemManager($this->getPdo());
+                // l'objet $item hydraté est simplement envoyé en paramètre de insert()
+                $item = new Item();
+                $item->setTitle(trim($_POST['title']));
+                $itemManager->insert($item);
+                // si tout se passe bien, redirection
+                header('Location: /');
+                exit();
+            }
+            // le formulaire HTML est affiché (vue à créer)
+            return $this->pdo->render('item/add.html.twig');
+        }
     }
 }
+
+
