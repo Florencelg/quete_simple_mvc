@@ -38,7 +38,7 @@ class ItemManager extends AbstractManager
             return $this->pdo->lastInsertId();
         }
     }
-    
+
     /**
      * @param int $id
      */
