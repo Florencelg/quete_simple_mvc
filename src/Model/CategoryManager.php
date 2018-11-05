@@ -12,6 +12,30 @@ namespace Model;
 class CategoryManager extends AbstractManager
 {
     /**
+     * CategoryManager constructor.
+     * @param string $table
+     * @param \PDO $pdo
+     */
+    public function __construct(string $table, \PDO $pdo)
+    {
+        parent::__construct($table, $pdo);
+    }
+
+    /**
+     * @param Category $category
+     * @return int
+     */
+    public function category(Category $category):string
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("INSERT INTO $this->table (`category`) VALUES (:title)");
+        $statement->bindValue('name', $category->getCategory(), \PDO::PARAM_STR);
+
+        if ($statement->execute()) {
+            return $this->pdo->lastInsertId();
+        }
+    }
+    /**
      * @return array
      */
     public function selectAllCategory():array

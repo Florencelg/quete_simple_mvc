@@ -4,9 +4,9 @@
 
 {% block content %}
     <h1>Item : {{ items.title }}</h1>
-        <ul>
-             <li>Id : {{ items.id }} </li>
-        </ul>
-        <a href='/'>Back to list</a>
+    <p>{{ item.id }}. {{ item.title }}</p>
+    <a href="/item/edit/{{ item.id }}">Edit</a>
+    <a href="/item/delete/{{item.id}}">Supprimer</a>
+    <a href='/'>Back to list</a>
 
 {% endblock %}

@@ -2,9 +2,9 @@
 {% block title %}{{ parent() }}{% endblock %}
 
 {% block content %}
-    <h1>Item : {{ category.title }}</h1>
+    <h1>Item : {{ categorys.title }}</h1>
          <ul>
-            <li>Id :{{ category.id }} </li>
+            <li>Id :{{ categorys.id }} </li>
          </ul>
-    <a href='/categorys'>Back to list</a>
+    <a href='/category'>Back to list</a>
 {% endblock %}

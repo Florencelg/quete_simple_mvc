@@ -19,7 +19,7 @@ class ItemManager extends AbstractManager
      * @param Item $item
      * @return int
      */
-    public function insert(Item $item):int
+    public function insert(Item $item):string
     {
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table (`item`) VALUES (:title)");

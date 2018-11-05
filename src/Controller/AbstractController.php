@@ -14,7 +14,13 @@ use App\Connection;
 
 abstract class AbstractController
 {
+    /**
+     * @var Twig_Environment
+     */
     protected $twig;
+    /**
+     * @var \PDO
+     */
     protected $pdo;
 
     /**

@@ -7,6 +7,7 @@
  */
 namespace Controller {
 
+    use Model\Category;
     use Model\CategoryManager;
 
     class CategoryController extends AbstractController
