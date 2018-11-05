@@ -17,30 +17,34 @@ namespace Controller {
      */
     class ItemController extends AbstractController
     {
-
-
         /**
-         * @return mixed
+         * @return string
+         * @throws \Twig_Error_Loader
+         * @throws \Twig_Error_Runtime
+         * @throws \Twig_Error_Syntax
          */
-        public function index()
+        public function index():string
         {
-            $itemManager = new ItemManager($this->pdo);
+            $itemManager = new ItemManager($this->getPdo());
             $items = $itemManager->selectAll();
 
-            return $this->pdo->render('item.html.twig', ['items' => $items]);
+            return $this->twig->render('Item/index.html.twig', ['items' => $items]);
 
         }
 
         /**
          * @param int $id
-         * @return mixed
+         * @return string
+         * @throws \Twig_Error_Loader
+         * @throws \Twig_Error_Runtime
+         * @throws \Twig_Error_Syntax
          */
         public function show(int $id)
         {
             $itemManager = new ItemManager($this->getPdo());
             $item = $itemManager->selectOneById($id);
 
-            return $this->pdo->render('Item/show.html.twig', ['items' => $item]);
+            return $this->twig->render('Item/show.html.twig', ['items' => $item]);
 
         }
 
@@ -63,7 +67,10 @@ namespace Controller {
         }
 
         /**
-         * @return mixed
+         * @return string
+         * @throws \Twig_Error_Loader
+         * @throws \Twig_Error_Runtime
+         * @throws \Twig_Error_Syntax
          */
         public function add()
         {
@@ -77,7 +84,7 @@ namespace Controller {
                 header('Location: /item/'.$id);
             }
             // le formulaire HTML est affiché (vue à créer)
-            return $this->twig->render('item/add.html.twig');
+            return $this->twig->render('Item/add.html.twig');
         }
 
         /**

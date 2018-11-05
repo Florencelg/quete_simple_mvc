@@ -8,14 +8,30 @@
 
 namespace Model;
 
-use App\Connection;
-
+/**
+ * Class AbstractManager
+ * @package Model
+ */
 abstract class AbstractManager
 {
+    /**
+     * @var \PDO
+     */
     protected $pdo; // connexion
+    /**
+     * @var string
+     */
     protected $table;
+    /**
+     * @var string
+     */
     protected $className;
 
+    /**
+     * AbstractManager constructor.
+     * @param string $table
+     * @param \PDO $pdo
+     */
     public function __construct(string $table, \PDO $pdo)
     {
 
@@ -24,11 +40,18 @@ abstract class AbstractManager
         $this->pdo = $pdo;
     }
 
+    /**
+     * @return array
+     */
     public function selectAll(): array
     {
         return $this->pdo->query('SELECT * FROM ' . $this->table, \PDO::FETCH_CLASS, $this->className)->fetchAll();
     }
 
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function selectOneById(int $id)
     {
         $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE id=:id");

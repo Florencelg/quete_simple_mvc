@@ -10,9 +10,18 @@ namespace Model;
 
 class ItemManager extends AbstractManager
 {
-    public function __construct(string $table, \PDO $pdo)
+    /**
+     *
+     */
+    const TABLE ='item';
+
+    /**
+     * ItemManager constructor.
+     * @param \PDO $pdo
+     */
+    public function __construct(\PDO $pdo)
     {
-        parent::__construct($table, $pdo);
+        parent::__construct(self::TABLE, $pdo);
     }
 
     /**
@@ -23,35 +32,34 @@ class ItemManager extends AbstractManager
     {
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table (`item`) VALUES (:title)");
-        $statement->bindValue('name', $item->getItem(), \PDO::PARAM_STR);
+        $statement->bindValue('title', $item->getTitle(), \PDO::PARAM_STR);
 
         if ($statement->execute()) {
             return $this->pdo->lastInsertId();
         }
     }
+    
     /**
-     * @return array
+     * @param int $id
      */
-    public function selectAllItems():array
+    public function delete(int $id): void
     {
-
-        $query = "SELECT * FROM item";
-        $res = $pdo->query($query, Item::class);
-
-        return $res->fetchAll();
+        // prepared request
+        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
     }
 
     /**
-     * @param int $id
-     * @return array
+     * @param Item $item
+     * @return int
      */
-    public function selectOneItem(int $id):array{
-
-        $query = "SELECT * FROM item WHERE id = :id";
-        $statement = $this->prepare($query);
-        $statement->bindValue(':id', $id, \PDO::PARAM_INT);
-        $statement->execute();
-        // contrairement à fetchAll(), fetch() ne renvoie qu'un seul résultat
-        return $statement->fetch();
+    public function update(Item $item):int
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE $this->table SET `title` = :title WHERE id=:id");
+        $statement->bindValue('id', $item->getId(), \PDO::PARAM_INT);
+        $statement->bindValue('title', $item->getTitle(), \PDO::PARAM_STR);
+        return $statement->execute();
     }
 }
